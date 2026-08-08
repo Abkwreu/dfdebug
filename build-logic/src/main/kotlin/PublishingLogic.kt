@@ -87,7 +87,9 @@ fun Project.configureModPublishing(ctx: Context) {
         val deps = ctx.extension.dependencies
 
         modrinth(ctx, ctx.publishAdditionalVersions, mrStaging, modrinthAccessToken, deps)
-        if (!mrStaging) curseforge(ctx, ctx.publishAdditionalVersions, curseforgeAccessToken, deps)
+        if (!mrStaging && "snapshot" !in ctx.currentMcVersion) {
+            curseforge(ctx, ctx.publishAdditionalVersions, curseforgeAccessToken, deps)
+        }
     }
 }
 
@@ -123,7 +125,7 @@ private fun ModPublishExtension.curseforge(
     server = ctx.environment.lowercase() in setOf("server", "both")
 
     this.accessToken = accessToken
-    minecraftVersions.addAll((listOf(ctx.currentMcVersion) + additionalVersions).filterNot { it.contains("snapshot") })
+    minecraftVersions.addAll(listOf(ctx.currentMcVersion) + additionalVersions)
 
     deps.required.forEach { dep -> whenNotNull(dep.curseforge) { requires(it) } }
     deps.optional.forEach { dep -> whenNotNull(dep.curseforge) { optional(it) } }
