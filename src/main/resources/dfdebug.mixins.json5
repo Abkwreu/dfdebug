@@ -1,0 +1,26 @@
+{
+  "package": "com.abkwreu.dfdebug.mixin",
+  "required": true,
+  "minVersion": "0.8",
+  //? if >= 1.20.5 {
+  "compatibilityLevel": "JAVA_21",
+  //?} else {
+  /*"compatibilityLevel": "JAVA_17",
+
+  */
+  //?}
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "RandomStateMixin",
+    //? if >= 1.21.9
+    "DebugScreenEntriesMixin",
+    //? if neoforge && >= 1.21.9
+    //"DebugScreenEntriesInvoker",
+    //? if fabric && < 1.21.9
+    //"DebugScreenOverlayMixin",
+  ],
+  "client": [
+  ]
+}
